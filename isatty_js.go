@@ -1,12 +1,15 @@
-//go:build appengine || nacl
-// +build appengine nacl
+//go:build js
+// +build js
 
 package isatty
 
-// IsTerminal returns true if the file descriptor is terminal which
-// is always false on js and appengine classic which is a sandboxed PaaS.
+import (
+	"golang.org/x/term"
+)
+
+// IsTerminal returns true if the file descriptor is terminal.
 func IsTerminal(fd uintptr) bool {
-	return false
+	return term.IsTerminal(int(fd))
 }
 
 // IsCygwinTerminal() return true if the file descriptor is a cygwin or msys2
